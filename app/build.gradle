@@ -6,6 +6,9 @@ plugins {
     id 'kotlinx-serialization'
 }
 
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
 android {
     compileSdk 32
 
@@ -16,6 +19,8 @@ android {
         versionCode 1
         versionName "1.0"
 
+        buildConfigField "String", "CLIENT_KEY", properties["client_key"]
+        buildConfigField "String", "CLIENT_ID", properties["client_id"]
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -64,13 +69,16 @@ dependencies {
     implementation 'com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0'
 
     // lifecycle
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.0'
-    implementation 'androidx.activity:activity-ktx:1.5.0'
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
+    implementation 'androidx.activity:activity-ktx:1.5.1'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
 
     // DataStore
     implementation "androidx.datastore:datastore-preferences:1.0.0"
 
     //Coil
     implementation "io.coil-kt:coil:2.1.0"
+
+    // chrom custome tab
+    implementation "androidx.browser:browser:1.4.0"
 }
