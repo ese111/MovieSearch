@@ -1,14 +1,16 @@
 package com.example.moviesearch.ui.home
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moviesearch.databinding.ActivityMainBinding
-import com.example.moviesearch.ui.web.WebActivity
+import com.example.moviesearch.ui.log.LogActivity
 import com.example.socarassignment.common.UiState
 import com.example.socarassignment.common.logger
 import com.example.socarassignment.common.repeatOnStarted
@@ -24,7 +26,9 @@ class MainActivity : AppCompatActivity() {
     private val viewModel: MovieViewModel by viewModels()
 
     private val movieAdapter: MovieAdapter by lazy {
-        MovieAdapter()
+        MovieAdapter { link ->
+            CustomTabsIntent.Builder().build().launchUrl(this, Uri.parse(link))
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,7 +48,8 @@ class MainActivity : AppCompatActivity() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
 
-                val lastVisibleItemPosition = (recyclerView.layoutManager as LinearLayoutManager?)!!.findLastCompletelyVisibleItemPosition() // 화면에 보이는 마지막 아이템의 position
+                val lastVisibleItemPosition =
+                    (recyclerView.layoutManager as LinearLayoutManager?)!!.findLastCompletelyVisibleItemPosition() // 화면에 보이는 마지막 아이템의 position
                 val itemTotalCount = recyclerView.adapter!!.itemCount - 5 //
 
                 // 스크롤이 끝에 도달했는지 확인
@@ -85,7 +90,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setSearchLog() {
         binding.btnLog.setOnClickListener {
-            val intent = Intent(this, WebActivity::class.java)
+            val intent = Intent(this, LogActivity::class.java)
             startActivity(intent)
         }
     }

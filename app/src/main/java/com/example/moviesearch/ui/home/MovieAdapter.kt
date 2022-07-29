@@ -9,7 +9,7 @@ import com.example.moviesearch.data.model.MovieResult
 import com.example.moviesearch.databinding.ItemMovieBinding
 
 
-class MovieAdapter :
+class MovieAdapter(private val listener: (String) -> Unit) :
     ListAdapter<MovieResult.ItemResult, MovieAdapter.MovieViewHolder>(MovieDiffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
@@ -26,11 +26,18 @@ class MovieAdapter :
         holder.bind(getItem(position))
     }
 
-    class MovieViewHolder(private val binding: ItemMovieBinding) :
+    inner class MovieViewHolder(private val binding: ItemMovieBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: MovieResult.ItemResult) {
             binding.item = item
+            setItemClick(item)
+        }
+
+        private fun setItemClick(item: MovieResult.ItemResult) {
+            itemView.setOnClickListener {
+                listener(item.link)
+            }
         }
     }
 
