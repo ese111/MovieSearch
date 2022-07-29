@@ -1,5 +1,6 @@
 package com.example.moviesearch.ui.home
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -7,6 +8,13 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.preferencesDataStore
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moviesearch.databinding.ActivityMainBinding
@@ -15,6 +23,9 @@ import com.example.socarassignment.common.UiState
 import com.example.socarassignment.common.logger
 import com.example.socarassignment.common.repeatOnStarted
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -64,6 +75,7 @@ class MainActivity : AppCompatActivity() {
     private fun setSearchButton() {
         binding.btnSearch.setOnClickListener {
             viewModel.name = binding.tiSearch.text.toString()
+            viewModel.setLog(binding.tiSearch.text.toString())
             viewModel.setFirstMovieResult()
         }
     }

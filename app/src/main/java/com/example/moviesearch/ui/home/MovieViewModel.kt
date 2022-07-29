@@ -3,6 +3,7 @@ package com.example.moviesearch.ui.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.moviesearch.data.model.MovieResult
+import com.example.moviesearch.data.repository.LogRepository
 import com.example.moviesearch.data.repository.MovieRepository
 import com.example.socarassignment.common.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,7 +14,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MovieViewModel @Inject constructor(private val repository: MovieRepository) : ViewModel() {
+class MovieViewModel @Inject constructor(private val movieRepository: MovieRepository, private val logRepository: LogRepository) : ViewModel() {
 
     private val _movieResult =
         MutableStateFlow<UiState<List<MovieResult.ItemResult>>>(UiState.Loading)
@@ -23,9 +24,15 @@ class MovieViewModel @Inject constructor(private val repository: MovieRepository
 
     private var paging = 1
 
+    fun setLog(word: String) {
+        viewModelScope.launch {
+            logRepository.setLog(word)
+        }
+    }
+
     fun setMovieResult() {
         viewModelScope.launch {
-            repository.getMovieResult(name, paging).catch {
+            movieRepository.getMovieResult(name, paging).catch {
                 _movieResult.value = UiState.Error("네트워크 연결 실패")
             }.collect {
                 if (it.total <= paging) {
@@ -44,7 +51,7 @@ class MovieViewModel @Inject constructor(private val repository: MovieRepository
     fun setFirstMovieResult() {
         paging = 1
         viewModelScope.launch {
-            repository.getMovieResult(name, paging).catch {
+            movieRepository.getMovieResult(name, paging).catch {
                 _movieResult.value = UiState.Error("네트워크 연결 실패")
             }.collect {
                 if (it.total <= paging) {
