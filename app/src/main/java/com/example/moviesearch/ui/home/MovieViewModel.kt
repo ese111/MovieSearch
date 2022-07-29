@@ -1,5 +1,6 @@
-package com.example.moviesearch.ui
+package com.example.moviesearch.ui.home
 
+import androidx.databinding.BaseObservable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.moviesearch.data.model.MovieResult
@@ -19,9 +20,11 @@ class MovieViewModel @Inject constructor(private val repository: MovieRepository
     private val _movieResult = MutableStateFlow<UiState<MovieResult>>(UiState.Loading)
     val movieResult = _movieResult.asStateFlow()
 
+    var name = ""
+
     private var paging = 1
 
-    fun getMovieResult(name: String) {
+    fun setMovieResult() {
         viewModelScope.launch {
             repository.getMovieResult(name, paging).catch {
                 _movieResult.value = UiState.Error("네트워크 연결 실패")

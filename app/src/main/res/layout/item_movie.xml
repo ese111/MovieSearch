@@ -1,83 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="150dp"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <ImageView
-        android:id="@+id/iv_thumbnail"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        app:layout_constraintWidth_percent="0.4"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:src="@drawable/ic_launcher_foreground"/>
+    <data>
+        <variable
+            name="item"
+            type="com.example.moviesearch.data.model.MovieResult.ItemResult" />
+    </data>
 
-    <TextView
-        android:id="@+id/tv_title_label"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="@id/iv_thumbnail"
-        android:gravity="center_vertical"
-        app:layout_constraintHeight_percent="0.2"
-        app:layout_constraintWidth_percent="0.15"
-        android:text="@string/title_label"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp">
 
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintStart_toEndOf="@id/tv_title_label"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.2"
-        app:layout_constraintTop_toTopOf="parent"
-        android:gravity="center_vertical"
-        tools:text="마더"/>
+        <View
+            android:id="@+id/spacer"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintHeight_percent="0.1"
+            app:layout_constraintTop_toTopOf="parent"/>
 
-    <TextView
-        android:id="@+id/tv_release_label"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/tv_title_label"
-        app:layout_constraintStart_toEndOf="@id/iv_thumbnail"
-        android:gravity="center_vertical"
-        app:layout_constraintHeight_percent="0.2"
-        app:layout_constraintWidth_percent="0.15"
-        android:text="@string/releas_label"/>
+        <ImageView
+            android:id="@+id/iv_thumbnail"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="fitCenter"
+            app:layout_constraintTop_toBottomOf="@id/spacer"
+            app:layout_constraintWidth_percent="0.3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:src="@drawable/ic_launcher_foreground"
+            app:thumbnail="@{item.image}"/>
 
-    <TextView
-        android:id="@+id/tv_release"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintStart_toEndOf="@id/tv_release_label"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.2"
-        android:gravity="center_vertical"
-        app:layout_constraintTop_toBottomOf="@id/tv_title"
-        tools:text="2022.07.25"/>
+        <TextView
+            android:id="@+id/tv_title_label"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/spacer"
+            app:layout_constraintStart_toEndOf="@id/iv_thumbnail"
+            android:gravity="center_vertical"
+            android:layout_marginStart="10dp"
+            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintWidth_percent="0.15"
+            android:text="@string/title_label" />
 
-    <TextView
-        android:id="@+id/tv_mark_label"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/tv_release_label"
-        app:layout_constraintStart_toEndOf="@id/iv_thumbnail"
-        android:gravity="center_vertical"
-        app:layout_constraintHeight_percent="0.2"
-        app:layout_constraintWidth_percent="0.15"
-        android:text="@string/mark_label"/>
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toEndOf="@id/tv_title_label"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintTop_toBottomOf="@id/spacer"
+            android:gravity="center_vertical"
+            app:textParse="@{item.title}"
+            tools:text="마더" />
 
-    <TextView
-        android:id="@+id/tv_mark"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintStart_toEndOf="@id/tv_mark_label"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.2"
-        app:layout_constraintTop_toBottomOf="@id/tv_release"
-        android:gravity="center_vertical"
-        tools:text="5.0점"/>
+        <TextView
+            android:id="@+id/tv_release_label"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/tv_title_label"
+            app:layout_constraintStart_toEndOf="@id/iv_thumbnail"
+            android:gravity="center_vertical"
+            android:layout_marginStart="10dp"
+            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintWidth_percent="0.15"
+            android:text="@string/releas_label" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/tv_release"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toEndOf="@id/tv_release_label"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.2"
+            android:gravity="center_vertical"
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            android:text="@{item.pubDate}"
+            tools:text="2022.07.25" />
+
+        <TextView
+            android:id="@+id/tv_mark_label"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/tv_release_label"
+            app:layout_constraintStart_toEndOf="@id/iv_thumbnail"
+            android:gravity="center_vertical"
+            android:layout_marginStart="10dp"
+            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintWidth_percent="0.15"
+            android:text="@string/mark_label" />
+
+        <TextView
+            android:id="@+id/tv_mark"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toEndOf="@id/tv_mark_label"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintTop_toBottomOf="@id/tv_release"
+            android:gravity="center_vertical"
+            android:text="@{item.userRating}"
+            tools:text="5.0점" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

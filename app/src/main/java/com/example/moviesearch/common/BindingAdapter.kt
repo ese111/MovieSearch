@@ -1,29 +1,29 @@
-package com.example.socarassignment.common
+package com.example.moviesearch.common
 
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
-import com.example.socarassignment.R
-import com.example.socarassignment.data.model.StationInfo
+import coil.load
+import com.example.moviesearch.R
+import com.example.socarassignment.common.logger
+import com.google.android.material.textfield.TextInputEditText
 
-@BindingAdapter("app:startStationCircle")
-fun setStartStationCircle(textView: TextView, startStation: StationInfo) {
-    if (startStation.name != "") {
-        textView.background =
-            ContextCompat.getDrawable(textView.context, R.drawable.ic_start_marker)
+@BindingAdapter("app:thumbnail")
+fun setThumbNail(imageView: ImageView, url: String) {
+    if(url != "") {
+        imageView.load(url)
     } else {
-        textView.background =
-            ContextCompat.getDrawable(textView.context, R.drawable.ic_station_badge_default)
+        imageView.setImageDrawable(ContextCompat.getDrawable(imageView.context, R.drawable.ic_hide_image))
     }
 }
 
-@BindingAdapter("app:arrivalStationCircle")
-fun setArrivalStationCircle(textView: TextView, arrivalStation: StationInfo) {
-    if (arrivalStation.name != "") {
-        textView.background =
-            ContextCompat.getDrawable(textView.context, R.drawable.ic_arrival_marker)
-    } else {
-        textView.background =
-            ContextCompat.getDrawable(textView.context, R.drawable.ic_station_badge_default)
-    }
+@BindingAdapter("app:textParse")
+fun setTextParse(textView: TextView, text: String) {
+    textView.text = text.replace("<b>", "").replace("</b>", "")
+}
+
+@BindingAdapter("app:addTextWatcher")
+fun setTextWatcher(editText: TextInputEditText) {
+
 }

@@ -1,4 +1,7 @@
 package com.example.moviesearch
 
-class MovieSeacher {
-}
+import android.app.Application
+import dagger.hilt.android.HiltAndroidApp
+
+@HiltAndroidApp
+class MovieSearcher: Application()
