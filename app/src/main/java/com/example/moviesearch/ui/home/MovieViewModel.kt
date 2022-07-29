@@ -1,6 +1,5 @@
 package com.example.moviesearch.ui.home
 
-import androidx.databinding.BaseObservable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.moviesearch.data.model.MovieResult
@@ -10,14 +9,14 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MovieViewModel @Inject constructor(private val repository: MovieRepository): ViewModel() {
+class MovieViewModel @Inject constructor(private val repository: MovieRepository) : ViewModel() {
 
-    private val _movieResult = MutableStateFlow<UiState<MovieResult>>(UiState.Loading)
+    private val _movieResult =
+        MutableStateFlow<UiState<List<MovieResult.ItemResult>>>(UiState.Loading)
     val movieResult = _movieResult.asStateFlow()
 
     var name = ""
@@ -29,8 +28,36 @@ class MovieViewModel @Inject constructor(private val repository: MovieRepository
             repository.getMovieResult(name, paging).catch {
                 _movieResult.value = UiState.Error("네트워크 연결 실패")
             }.collect {
-                _movieResult.value = UiState.Success(it)
+                if (it.total <= paging) {
+                    _movieResult.value = UiState.Error("검색 결과가 없습니다.")
+                    return@collect
+                }
+                val list = mutableListOf<MovieResult.ItemResult>()
+                _movieResult.value._data?.let { items -> list.addAll(items) }
+                list.addAll(it.items)
+                _movieResult.value = UiState.Success(list)
             }
+            paging += 10
         }
     }
+
+    fun setFirstMovieResult() {
+        paging = 1
+        viewModelScope.launch {
+            repository.getMovieResult(name, paging).catch {
+                _movieResult.value = UiState.Error("네트워크 연결 실패")
+            }.collect {
+                if (it.total <= paging) {
+                    _movieResult.value = UiState.Error("검색 결과가 없습니다.")
+                    return@collect
+                }
+                val list = mutableListOf<MovieResult.ItemResult>()
+                _movieResult.value._data?.let { items -> list.addAll(items) }
+                list.addAll(it.items)
+                _movieResult.value = UiState.Success(list)
+            }
+            paging += 10
+        }
+    }
+
 }

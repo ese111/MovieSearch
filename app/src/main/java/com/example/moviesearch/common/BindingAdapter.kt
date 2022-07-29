@@ -22,8 +22,3 @@ fun setThumbNail(imageView: ImageView, url: String) {
 fun setTextParse(textView: TextView, text: String) {
     textView.text = text.replace("<b>", "").replace("</b>", "")
 }
-
-@BindingAdapter("app:addTextWatcher")
-fun setTextWatcher(editText: TextInputEditText) {
-
-}

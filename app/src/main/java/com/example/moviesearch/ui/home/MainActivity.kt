@@ -1,10 +1,10 @@
 package com.example.moviesearch.ui.home
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moviesearch.databinding.ActivityMainBinding
@@ -13,7 +13,6 @@ import com.example.socarassignment.common.UiState
 import com.example.socarassignment.common.logger
 import com.example.socarassignment.common.repeatOnStarted
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -44,8 +43,11 @@ class MainActivity : AppCompatActivity() {
 
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                val lastVisibleItemPosition = (recyclerView.layoutManager as LinearLayoutManager).findLastCompletelyVisibleItemPosition()
-                val itemTotalCount = recyclerView.adapter?.itemCount?.minus(1)
+
+                val lastVisibleItemPosition = (recyclerView.layoutManager as LinearLayoutManager?)!!.findLastCompletelyVisibleItemPosition() // 화면에 보이는 마지막 아이템의 position
+                val itemTotalCount = recyclerView.adapter!!.itemCount - 5 //
+
+                // 스크롤이 끝에 도달했는지 확인
                 if (lastVisibleItemPosition == itemTotalCount) {
                     viewModel.setMovieResult()
                 }
@@ -56,18 +58,18 @@ class MainActivity : AppCompatActivity() {
 
     private fun setSearchButton() {
         binding.btnSearch.setOnClickListener {
-//            val name = binding.tiSearch.text.toString()
-            viewModel.setMovieResult()
+            viewModel.name = binding.tiSearch.text.toString()
+            viewModel.setFirstMovieResult()
         }
     }
 
     private fun setResultObserver() {
         repeatOnStarted {
             viewModel.movieResult.collect {
-                when(it) {
+                when (it) {
                     is UiState.Success -> {
-                        if(it.data.items.isNotEmpty()) {
-                            movieAdapter.submitList(it.data.items)
+                        if (it.data.isNotEmpty()) {
+                            movieAdapter.submitList(it.data)
                         }
                     }
                     is UiState.Error -> {
@@ -87,6 +89,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
+
     private fun setRecyclerViewAdapter() {
         binding.rvMovieList.apply {
             adapter = movieAdapter
