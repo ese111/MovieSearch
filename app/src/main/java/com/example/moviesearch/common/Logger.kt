@@ -1,4 +1,4 @@
-package com.example.socarassignment.common
+package com.example.moviesearch.common
 
 import android.util.Log
 

@@ -1,4 +1,4 @@
-package com.example.socarassignment.common
+package com.example.moviesearch.common
 
 // stateFlow를 이용할때 사용할 sealed class
 sealed class UiState<out T>(val _data: T?, val _message: String?) {

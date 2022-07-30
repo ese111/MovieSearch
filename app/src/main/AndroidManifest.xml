@@ -21,9 +21,6 @@
             android:name=".ui.log.LogActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.web.WebActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.home.MainActivity"
             android:exported="true">
             <intent-filter>
