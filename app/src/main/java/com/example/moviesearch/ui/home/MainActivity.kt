@@ -23,9 +23,7 @@ import com.example.socarassignment.common.UiState
 import com.example.socarassignment.common.logger
 import com.example.socarassignment.common.repeatOnStarted
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
+
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -51,6 +49,7 @@ class MainActivity : AppCompatActivity() {
         setSearchLog()
         setResultObserver()
         setRecyclerViewScrollListener()
+        setViewModel()
     }
 
     private fun setRecyclerViewScrollListener() {
@@ -103,10 +102,11 @@ class MainActivity : AppCompatActivity() {
     private fun setSearchLog() {
         binding.btnLog.setOnClickListener {
             val intent = Intent(this, LogActivity::class.java)
-            startActivity(intent)
+            startForResult.launch(intent)
         }
     }
 
+    // adapter setting
     private fun setRecyclerViewAdapter() {
         binding.rvMovieList.apply {
             adapter = movieAdapter

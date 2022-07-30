@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.moviesearch.data.model.MovieResult
 import com.example.moviesearch.databinding.ItemMovieBinding
 
-
 class MovieAdapter(private val listener: (String) -> Unit) :
     ListAdapter<MovieResult.ItemResult, MovieAdapter.MovieViewHolder>(MovieDiffUtil) {
 
@@ -20,6 +19,7 @@ class MovieAdapter(private val listener: (String) -> Unit) :
                 false
             )
         )
+
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
@@ -47,7 +47,7 @@ class MovieAdapter(private val listener: (String) -> Unit) :
             oldItem: MovieResult.ItemResult,
             newItem: MovieResult.ItemResult
         ) =
-            oldItem == newItem
+            oldItem == newItem // isLast가 변화할때 리스트를 변경하기 위해서 hashCode로 검사
 
         override fun areContentsTheSame(
             oldItem: MovieResult.ItemResult,
