@@ -2,10 +2,10 @@ package com.example.moviesearch.ui.log
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.moviesearch.common.UiState
+import com.example.moviesearch.common.logger
 import com.example.moviesearch.data.model.Logs
 import com.example.moviesearch.data.repository.LogRepository
-import com.example.socarassignment.common.UiState
-import com.example.socarassignment.common.logger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LogViewModel @Inject constructor(private val repository: LogRepository): ViewModel() {
+class LogViewModel @Inject constructor(private val repository: LogRepository) : ViewModel() {
 
     private val _words = MutableStateFlow<UiState<Logs>>(UiState.Loading)
     val word = _words.asStateFlow()

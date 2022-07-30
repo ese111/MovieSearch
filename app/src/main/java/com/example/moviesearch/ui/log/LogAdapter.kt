@@ -7,7 +7,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moviesearch.databinding.ItemLogBinding
 
-class LogAdapter(private val listener: (String) -> Unit) : ListAdapter<String, LogAdapter.LogViewHolder>(LogDiffUtil) {
+class LogAdapter(private val listener: (String) -> Unit) :
+    ListAdapter<String, LogAdapter.LogViewHolder>(LogDiffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LogViewHolder {
         return LogViewHolder(
@@ -28,8 +29,10 @@ class LogAdapter(private val listener: (String) -> Unit) : ListAdapter<String, L
 
         fun bind(item: String) {
             binding.log = item
+            setClickLog(item)
         }
 
+        // 검색 기록 선택시 검색 시작
         private fun setClickLog(item: String) {
             itemView.setOnClickListener {
                 listener(item)

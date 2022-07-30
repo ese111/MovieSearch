@@ -2,7 +2,6 @@ package com.example.moviesearch.data.repository
 
 import com.example.moviesearch.data.datasource.LogDataSource
 import com.example.moviesearch.data.model.Logs
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 import javax.inject.Singleton

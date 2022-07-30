@@ -16,7 +16,6 @@ data class MovieResult(
         val pubDate: String = "",
         val subtitle: String = "",
         val title: String = "",
-        val userRating: String = "",
-        val isLast: Boolean = false
+        val userRating: String = ""
     )
 }

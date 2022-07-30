@@ -45,5 +45,14 @@ fun MovieDTO.toMovieResult(): MovieResult {
 }
 
 fun MovieDTO.Item.toItemResult(): MovieResult.ItemResult {
-    return MovieResult.ItemResult(actor, director, image, link, pubDate, subtitle, title, userRating)
+    return MovieResult.ItemResult(
+        actor,
+        director,
+        image,
+        link,
+        pubDate,
+        subtitle,
+        title,
+        userRating
+    )
 }
